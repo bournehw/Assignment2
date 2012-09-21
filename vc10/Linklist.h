@@ -1,29 +1,28 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
-#include "Shape.h"
+#include "..\vc10\MyCircle.h"
 
 class Linklist{
   public:
 	void setup();
 	void update();
+	void draw();
 
 	struct node{
 		node* next;
 		node* prev;
-		Shape shape;
+		MyShape* shape;
 	};
 
 	node* sentinel_;
 
 	Linklist();
-	Linklist(Shape* shape, node* next, node* prev);
-	
-	Shape shape_;
 
-	void reverseOrder(Linklist* list);
-
-	void insertAfter(node* target_link);
-	void insertBefore(node* target_link);
+	void reverseOrder();
+	void bringToFront(int x, int y);
+	void insertAfter(node* new_link, node* target_link);
+	void insertBefore(node* new_link, node* target_link);
+	node* removeNode(node* target_node);
 
 };
 

@@ -1,0 +1,1 @@
+#include "..\vc10\MyShape.h"

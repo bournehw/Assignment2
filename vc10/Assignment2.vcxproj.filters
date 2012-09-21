@@ -18,16 +18,13 @@
     <ClCompile Include="..\src\Assignment2App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shape.cpp">
+    <ClCompile Include="Linklist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ListLink.cpp">
+    <ClCompile Include="MyCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Circle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LinkManager.cpp">
+    <ClCompile Include="MyShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,13 +32,13 @@
     <ClInclude Include="..\include\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shape.h">
+    <ClInclude Include="Linklist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ListLink.h">
+    <ClInclude Include="MyCircle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Circle.h">
+    <ClInclude Include="MyShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
