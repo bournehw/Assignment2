@@ -1,6 +1,14 @@
+#ifndef _LINKLIST_H_
+#define _LINKLIST_H_
+
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
 #include "..\vc10\MyCircle.h"
+#include "..\vc10\Node.h"
+
+using namespace ci;
+using namespace ci::app;
+using namespace std;
 
 class Linklist{
   public:
@@ -8,21 +16,16 @@ class Linklist{
 	void update();
 	void draw();
 
-	struct node{
-		node* next;
-		node* prev;
-		MyShape* shape;
-	};
-
-	node* sentinel_;
+	Node* sentinel_;
 
 	Linklist();
 
 	void reverseOrder();
 	void bringToFront(int x, int y);
-	void insertAfter(node* new_link, node* target_link);
-	void insertBefore(node* new_link, node* target_link);
-	node* removeNode(node* target_node);
+	void insertAfter(Node* new_link, Node* target_link);
+	void insertBefore(Node* new_link, Node* target_link);
+	Node* removeNode(Node* target_node);
 
 };
 
+#endif

@@ -10,20 +10,29 @@ class Assignment2App : public AppBasic {
   public:
 	void setup();
 	void mouseDown( MouseEvent event );	
-	void KeyDown(KeyEvent event);
+	void keyDown(KeyEvent event);
 	void update();
-	void draw();
+	void draw();	
+	void prepareSettings(Settings* settings);
+	
 
+private:
 	Linklist* circle_list_;
-
+	static const int kAppWidth=800;
+	static const int kAppHeight=600;
+	
 	bool show_message_;
 };
+
+void Assignment2App::prepareSettings(Settings* settings){
+	settings->setWindowSize(kAppWidth,kAppHeight);
+	settings->setResizable(false);
+}
 
 void Assignment2App::setup()
 {
 	circle_list_ = new Linklist();
 	show_message_ = true;
-
 }
 
 void Assignment2App::mouseDown( MouseEvent event )
@@ -33,22 +42,22 @@ void Assignment2App::mouseDown( MouseEvent event )
 
 	if(event.isLeft()){
 		//create a new node at the end of the list.
+		 
+		Node* new_node = new Node();
+		new_node->shape_ = (MyShape*)new MyCircle(event.getX(), event.getY(), 25);
 
-		Linklist::node* new_node;
-		//malloc(sizeof(MyShape));
-		new_node->shape = (MyShape*)new MyCircle(event.getX(), event.getY(), 25);
-
-		circle_list_->insertBefore(new_node, circle_list_->sentinel_);
+		circle_list_->insertAfter(new_node, circle_list_->sentinel_);
 	}
 	else if(event.isRight())
 		circle_list_->bringToFront(x,y);
 	
 }
 
-void Assignment2App::KeyDown( KeyEvent event )
+void Assignment2App::keyDown( KeyEvent event )
 {
 	switch(event.getChar()){
-	case '?': show_message_ = !show_message_;
+	case '?': 
+		show_message_ = !show_message_;
 		break;
 	case 'r': 
 		circle_list_->reverseOrder();

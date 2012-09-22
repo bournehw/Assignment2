@@ -1,3 +1,6 @@
+#ifndef _MYCIRCLE_H_
+#define _MYCIRCLE_H_
+
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
 #include "..\vc10\MyShape.h"
@@ -15,3 +18,5 @@ class MyCircle : MyShape{
 		
 
 };
+
+#endif

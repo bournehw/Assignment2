@@ -1,3 +1,6 @@
+#ifndef _MYSHAPE_H_
+#define _MYSHAPE_H_
+
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
 
@@ -8,8 +11,6 @@ using namespace std;
 class MyShape{
 	public:
 		void draw();
-		void setup();
-		void update();
 
 		bool isPointInArea(int x, int y);
 
@@ -27,3 +28,4 @@ class MyShape{
 
 };
 
+#endif

@@ -1,4 +1,5 @@
 #include "MyCircle.h"
+#include "cinder/Rand.h"
 
 using namespace ci;
 
@@ -6,29 +7,27 @@ MyCircle::MyCircle(int x, int y, float radius){
 	this->radius_ = radius;
 	this->x_ = x;
 	this->y_ = y;
-}
 
-void MyShape::setup(){
-
-}
-
-void MyShape::update(){
-
+	//make the shape a random color:
+	Rand random;
+	random.seed(x);
+	this->color_ = Color8u(random.nextInt(0,256),
+		random.nextInt(0,256),random.nextInt(0,256));
 }
 
 void MyShape::draw(){
 
 	Vec2f* center = new Vec2f(this->x_, this->y_);
 
-	gl::drawSolidCircle(*center, ((MyCircle*)this)->radius_,0);
-	gl::color(ColorA(0.3,0.5,0.7,0.5)); //arbitrary color
+	gl::drawSolidCircle(*center, this->radius_,0);
+	gl::color(this->color_);
 }
 
 //This method checks whether or not a (x,y) point is within
 //its bounds and returns true if it is.
 bool MyShape::isPointInArea(int x, int y){
 
-	int radius = ((MyCircle*)this)->radius_;
+	int radius = this->radius_;
 
 	//check that the x-coord of the point is within our circle's width,
 	//then check if the y-coord is within the height. if so: return true
