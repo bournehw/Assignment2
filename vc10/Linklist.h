@@ -25,6 +25,7 @@ class Linklist{
 	void insertAfter(Node* new_link, Node* target_link);
 	void insertBefore(Node* new_link, Node* target_link);
 	Node* removeNode(Node* target_node);
+	Node* getNodeAt(int x, int y);
 
 };
 

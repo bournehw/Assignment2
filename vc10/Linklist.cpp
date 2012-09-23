@@ -31,29 +31,15 @@ void Linklist::reverseOrder(){
 
 }
 
-//This method cycles through the linked list, looking for a shape
-//whose boundaries overlap with the given coordinates.
-//The first shape that matches these parameters should be brought
+//The first shape that 'getNodeAt' finds should be brought
 //to the top of the list.
 void Linklist::bringToFront(int x, int y){
 
-	Node* current = this->sentinel_->next_;
-
-	while(current != this->sentinel_){
-
-		//if the point is within the area of the shape, bring it
-		//to the last position of the list and stop searching.
-		if((current->shape_)->isPointInArea(x, y)){
-			this->removeNode(current);
-			this->insertAfter(current,this->sentinel_);
-			break;
-		}
-
-		//Nothing found, move to the next Node.
-		current = current->next_;
-
+	Node* current = getNodeAt(x,y);
+	if(current != NULL){
+		this->removeNode(current);
+		this->insertAfter(current,this->sentinel_);
 	}
-
 }
 
 //This method inserts the "new_node" before the "target_node" in the linklist
@@ -107,3 +93,22 @@ void Linklist::draw(){
 
 }
 
+//This method cycles through the linked list, looking for the first shape
+//whose boundaries overlap with the given coordinates.
+Node* Linklist::getNodeAt(int x, int y){
+
+	Node* current = this->sentinel_->next_;
+
+	while(current != this->sentinel_){
+
+		//if the point is within the area of the shape return that node
+		if((current->shape_)->isPointInArea(x, y))
+			return current;
+
+		//otherwise Nothing found, move to the next Node.
+		current = current->next_;
+	}
+
+	//if no point was found, return null.
+	return NULL;
+}

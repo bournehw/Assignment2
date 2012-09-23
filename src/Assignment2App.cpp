@@ -11,17 +11,24 @@ class Assignment2App : public AppBasic {
 	void setup();
 	void mouseDown( MouseEvent event );	
 	void keyDown(KeyEvent event);
+	void mouseDrag(MouseEvent event);
+	void mouseMove(MouseEvent event);
+	void mouseUp(MouseEvent event);
 	void update();
 	void draw();	
 	void prepareSettings(Settings* settings);
-	
 
 private:
 	Linklist* circle_list_;
+	Linklist* grouped_circles_;
 	static const int kAppWidth=800;
 	static const int kAppHeight=600;
-	
+	bool is_moving_nodes_;
 	int index_;
+	int mouse_x_;
+	int mouse_y_;
+	Node* mobile_node;
+
 };
 
 void Assignment2App::prepareSettings(Settings* settings){
@@ -32,16 +39,34 @@ void Assignment2App::prepareSettings(Settings* settings){
 void Assignment2App::setup()
 {
 	circle_list_ = new Linklist();
-
+	grouped_circles_ = new Linklist();
+	is_moving_nodes_ = false;
 	index_ = 1;
+}
+
+void Assignment2App::mouseMove(MouseEvent event){
+
+	mouse_x_ = event.getX();
+	mouse_y_ = event.getY();
+
+}
+
+void Assignment2App::mouseDrag(MouseEvent event){
+
+	if(event.isLeftDown() && is_moving_nodes_ && mobile_node != NULL){
+		mouseMove(event);
+		mobile_node->shape_->x_ = mouse_x_;
+		mobile_node->shape_->y_	= mouse_y_;
+	}
+
 }
 
 void Assignment2App::mouseDown( MouseEvent event )
 {
-	int x = event.getX();
-	int y = event.getY();
-
-	if(event.isLeft()){
+	if(is_moving_nodes_){
+		mobile_node = circle_list_->getNodeAt(event.getX(),event.getY());
+	}
+	else if(event.isLeft()){
 		//create a new node at the end of the list.
 		 
 		Node* new_node = new Node(index_);
@@ -51,14 +76,15 @@ void Assignment2App::mouseDown( MouseEvent event )
 		index_++;
 	}
 	else if(event.isRight())
-		circle_list_->bringToFront(x,y);
+		circle_list_->bringToFront(event.getX(),event.getY());
 	
 }
 
 void Assignment2App::keyDown( KeyEvent event )
 {
 	switch(event.getChar()){
-	case '?': 
+	case 'm': 
+		is_moving_nodes_ = !is_moving_nodes_;
 		break;
 	case 'r': 
 		circle_list_->reverseOrder();
@@ -71,6 +97,11 @@ void Assignment2App::keyDown( KeyEvent event )
 
 void Assignment2App::update()
 {
+
+}
+
+void Assignment2App::mouseUp(MouseEvent event){
+
 }
 
 void Assignment2App::draw()
