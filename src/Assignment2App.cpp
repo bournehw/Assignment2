@@ -89,6 +89,9 @@ void Assignment2App::keyDown( KeyEvent event )
 	case 'r': 
 		circle_list_->reverseOrder();
 		break;
+	case 'a':
+		if(mobile_node != NULL)
+			mobile_node->shape_->setChild();
 	default:
 		break;
 		

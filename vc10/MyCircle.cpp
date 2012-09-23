@@ -7,6 +7,7 @@ MyCircle::MyCircle(int x, int y, float radius){
 	this->radius_ = radius;
 	this->x_ = x;
 	this->y_ = y;
+	this->child_ = NULL;
 
 	//make the shape a random color:
 	Rand random;
@@ -15,12 +16,23 @@ MyCircle::MyCircle(int x, int y, float radius){
 		random.nextInt(0,256),random.nextInt(0,256));
 }
 
+void MyCircle::setChild(){
+	this->child_ = new MyCircle(this->x_, this->y_, this->radius_ / 2);
+}
+
+void MyCircle::removeChild(){
+	delete this->child_;
+}
+
 void MyCircle::draw(){
 
 	Vec2f* center = new Vec2f(this->x_, this->y_);
 
 	gl::color(this->color_);
 	gl::drawSolidCircle(*center, this->radius_,0);
+	
+	if(this->child_ != NULL)
+		this->child_->draw();
 	
 }
 

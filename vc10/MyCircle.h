@@ -13,8 +13,6 @@ class MyCircle{
 		void draw();
 
 		MyCircle(int x, int y, float radius);
-		
-		bool isPointInArea(int x, int y);
 
 		//origin of circles = center
 		int x_;
@@ -22,6 +20,11 @@ class MyCircle{
 		int radius_;
 		Color8u color_;
 
+		MyCircle* child_;
+
+		bool isPointInArea(int x, int y);
+		void setChild();
+		void removeChild();
 };
 
 #endif
