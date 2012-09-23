@@ -31,11 +31,13 @@ void Linklist::reverseOrder(){
 
 }
 
-//The first shape that 'getNodeAt' finds should be brought
+//The first node with shape containing point (x,y)
+//that 'getNodeAt' finds should be brought
 //to the top of the list.
 void Linklist::bringToFront(int x, int y){
+	
+	Node* current = this->getNodeAt(x,y);
 
-	Node* current = getNodeAt(x,y);
 	if(current != NULL){
 		this->removeNode(current);
 		this->insertAfter(current,this->sentinel_);
@@ -95,14 +97,37 @@ void Linklist::draw(){
 
 //This method cycles through the linked list, looking for the first shape
 //whose boundaries overlap with the given coordinates.
-Node* Linklist::getNodeAt(int x, int y){
+MyCircle* Linklist::getCircleAt(int x, int y){
 
 	Node* current = this->sentinel_->next_;
 
 	while(current != this->sentinel_){
 
 		//if the point is within the area of the shape return that node
-		if((current->shape_)->isPointInArea(x, y))
+		MyCircle* active_circle = (current->shape_)->findCircleWithPoint(x, y);
+		if(active_circle != NULL)
+			return active_circle;
+
+		//otherwise Nothing found, move to the next Node.
+		current = current->next_;
+	}
+
+	//if no point was found, return null.
+	return NULL;
+}
+
+//This method cycles through the linked list, looking for the first shape
+//whose boundaries overlap with the given coordinates, then returns the
+//node that contains the shape.
+Node* Linklist::getNodeAt(int x, int y){
+
+	Node* current = this->sentinel_->next_;
+
+	while(current != this->sentinel_){
+
+		//if the point is within the area of the shape return that circle
+		MyCircle* active_circle = (current->shape_)->findCircleWithPoint(x, y);
+		if(active_circle != NULL)
 			return current;
 
 		//otherwise Nothing found, move to the next Node.
