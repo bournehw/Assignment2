@@ -15,17 +15,18 @@ MyCircle::MyCircle(int x, int y, float radius){
 		random.nextInt(0,256),random.nextInt(0,256));
 }
 
-void MyShape::draw(){
+void MyCircle::draw(){
 
 	Vec2f* center = new Vec2f(this->x_, this->y_);
 
-	gl::drawSolidCircle(*center, this->radius_,0);
 	gl::color(this->color_);
+	gl::drawSolidCircle(*center, this->radius_,0);
+	
 }
 
 //This method checks whether or not a (x,y) point is within
 //its bounds and returns true if it is.
-bool MyShape::isPointInArea(int x, int y){
+bool MyCircle::isPointInArea(int x, int y){
 
 	int radius = this->radius_;
 

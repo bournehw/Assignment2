@@ -5,7 +5,7 @@ using namespace ci::app;
 using namespace std;
 
 Linklist::Linklist(){
-	sentinel_ = new Node();
+	sentinel_ = new Node(-1);
 	sentinel_->next_ = sentinel_;
 	sentinel_->prev_ = sentinel_;
 	sentinel_->shape_ = NULL;
@@ -41,12 +41,9 @@ void Linklist::bringToFront(int x, int y){
 
 	while(current != this->sentinel_){
 
-		//store the shape of the current Node for ease of access
-		MyShape shape = *current->shape_;
-
 		//if the point is within the area of the shape, bring it
 		//to the last position of the list and stop searching.
-		if(shape.isPointInArea(x, y)){
+		if((current->shape_)->isPointInArea(x, y)){
 			this->removeNode(current);
 			this->insertAfter(current,this->sentinel_);
 			break;
@@ -86,10 +83,9 @@ void Linklist::insertAfter(Node* new_node, Node* target_node){
 Node* Linklist::removeNode(Node* target_node){
 
 	//point the next Node and the previous Node to each other.
-	Node temp = *target_node;
 
-	(target_node->next_)->prev_ = temp.prev_;
-	(target_node->prev_)->next_ = temp.next_;
+	(target_node->next_)->prev_ = target_node->prev_;
+	(target_node->prev_)->next_ = target_node->next_;
 
 	//make the target node's pointers null because it's no longer in a list.
 	target_node->prev_ = NULL;
@@ -104,7 +100,7 @@ void Linklist::draw(){
 	Node* current = this->sentinel_->prev_;
 
 	while(current != this->sentinel_){
-		(current->shape_)->draw(); //NOTE: this line might be fucked up.
+		(current->shape_)->draw();
 		
 		current = current->prev_;
 	}

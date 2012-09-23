@@ -21,7 +21,7 @@ private:
 	static const int kAppWidth=800;
 	static const int kAppHeight=600;
 	
-	bool show_message_;
+	int index_;
 };
 
 void Assignment2App::prepareSettings(Settings* settings){
@@ -32,7 +32,8 @@ void Assignment2App::prepareSettings(Settings* settings){
 void Assignment2App::setup()
 {
 	circle_list_ = new Linklist();
-	show_message_ = true;
+
+	index_ = 1;
 }
 
 void Assignment2App::mouseDown( MouseEvent event )
@@ -43,10 +44,11 @@ void Assignment2App::mouseDown( MouseEvent event )
 	if(event.isLeft()){
 		//create a new node at the end of the list.
 		 
-		Node* new_node = new Node();
-		new_node->shape_ = (MyShape*)new MyCircle(event.getX(), event.getY(), 25);
+		Node* new_node = new Node(index_);
+		new_node->shape_ = new MyCircle(event.getX(), event.getY(), 10*index_);
 
 		circle_list_->insertAfter(new_node, circle_list_->sentinel_);
+		index_++;
 	}
 	else if(event.isRight())
 		circle_list_->bringToFront(x,y);
@@ -57,7 +59,6 @@ void Assignment2App::keyDown( KeyEvent event )
 {
 	switch(event.getChar()){
 	case '?': 
-		show_message_ = !show_message_;
 		break;
 	case 'r': 
 		circle_list_->reverseOrder();

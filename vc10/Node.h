@@ -17,9 +17,10 @@ class Node{
 
 	Node* next_;
 	Node* prev_;
-	MyShape* shape_;
+	MyCircle* shape_;
+	int index_;
 
-	Node();
+	Node(int index);
 
 };
 

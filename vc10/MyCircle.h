@@ -3,19 +3,26 @@
 
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
-#include "..\vc10\MyShape.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class MyCircle : MyShape{
+class MyCircle{
 	public:
 		void draw();
 
 		MyCircle(int x, int y, float radius);
 		
-		
+				bool isPointInArea(int x, int y);
+
+		//origin of circles = center
+		int x_;
+		int y_;
+		int width_;
+		int height_;
+		int radius_;
+		Color8u color_;
 
 };
 
