@@ -27,6 +27,7 @@ class Linklist{
 	Node* removeNode(Node* target_node);
 	MyCircle* getCircleAt(int x, int y);
 	Node* getNodeAt(int x, int y);
+	void updateAlpha();
 
 };
 

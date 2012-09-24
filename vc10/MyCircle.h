@@ -19,18 +19,21 @@ class MyCircle{
 		int y_;
 		int radius_;
 		Color8u color_;
+		Color8u work_color_;
 		//these variables help keep track of the
 		//boundaries for children circles.
 		int anchor_x_;
 		int anchor_y_;
 		int bound_;
+		float alpha_level_;
 
 		MyCircle* child_;
 
 		MyCircle* findCircleWithPoint(int x, int y);
 		void setChild();
-		void removeChild();
+	//	void removeChild();
 		void move(int x, int y);
+		void updateAlpha(float alpha_level);
 };
 
 #endif

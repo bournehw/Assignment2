@@ -13,7 +13,6 @@ class Assignment2App : public AppBasic {
 	void keyDown(KeyEvent event);
 	void mouseDrag(MouseEvent event);
 	void mouseMove(MouseEvent event);
-	void mouseUp(MouseEvent event);
 	void mouseWheel(MouseEvent event);
 	void update();
 	void draw();	
@@ -30,7 +29,7 @@ private:
 	int mouse_y_;
 	int radius_;
 	bool radius_is_increasing_;
-	MyCircle* mobile_circle;
+	MyCircle* active_circle_;
 
 };
 
@@ -43,8 +42,9 @@ void Assignment2App::setup()
 {
 	circle_list_ = new Linklist();
 	grouped_circles_ = new Linklist();
+	active_circle_ = NULL;
 	is_moving_circles_ = false;
-	radius_is_increasing_ = false;
+	radius_is_increasing_ = true;
 	radius_ = 25;
 	index_ = 1;
 }
@@ -71,17 +71,17 @@ void Assignment2App::mouseWheel(MouseEvent event){
 
 void Assignment2App::mouseDrag(MouseEvent event){
 
-	if(event.isLeftDown() && is_moving_circles_ && mobile_circle != NULL){
+	if(event.isLeftDown() && is_moving_circles_ && active_circle_ != NULL){
 		mouseMove(event);
-		mobile_circle->move(mouse_x_, mouse_y_);
+		active_circle_->move(mouse_x_, mouse_y_);
 	}
 
 }
 
 void Assignment2App::mouseDown( MouseEvent event )
 {
-	if(is_moving_circles_){
-		mobile_circle = circle_list_->getCircleAt(event.getX(),event.getY());
+	if(is_moving_circles_ && event.isLeft()){
+		active_circle_ = circle_list_->getCircleAt(event.getX(),event.getY());
 	}
 	else if(event.isLeft()){
 		//create a new node at the end of the list.
@@ -90,10 +90,13 @@ void Assignment2App::mouseDown( MouseEvent event )
 		new_node->shape_ = new MyCircle(event.getX(), event.getY(), radius_);
 
 		circle_list_->insertAfter(new_node, circle_list_->sentinel_);
+		circle_list_->updateAlpha();
 		index_++;
 	}
-	else if(event.isRight())
+	else if(event.isRight()){
 		circle_list_->bringToFront(event.getX(),event.getY());
+		circle_list_->updateAlpha();
+	}
 	
 }
 
@@ -105,10 +108,11 @@ void Assignment2App::keyDown( KeyEvent event )
 		break;
 	case 'r': 
 		circle_list_->reverseOrder();
+		circle_list_->updateAlpha();
 		break;
 	case 'a':
-		if(mobile_circle != NULL)
-			mobile_circle->setChild();
+		if(active_circle_ != NULL)
+			active_circle_->setChild();
 	case 'i':
 		radius_is_increasing_ = !radius_is_increasing_;
 	default:
@@ -122,14 +126,10 @@ void Assignment2App::update()
 
 }
 
-void Assignment2App::mouseUp(MouseEvent event){
-
-}
-
 void Assignment2App::draw()
 {
 	// clear out the window with black
-	gl::clear( Color( 0, 0, 0 ) );
+	gl::clear( Color( 1, 1, 1 ) );
 
 	circle_list_->draw();
 

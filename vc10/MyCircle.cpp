@@ -10,6 +10,7 @@ MyCircle::MyCircle(int x, int y, float radius){
 	this->anchor_x_ = x;
 	this->anchor_y_ = y;
 	this->bound_ = 0;
+	this->alpha_level_ = 0;
 
 	//make sure the radius isn't too large
 	if(radius > 100)
@@ -22,6 +23,8 @@ MyCircle::MyCircle(int x, int y, float radius){
 	random.seed(x);
 	this->color_ = Color8u(random.nextInt(0,256),
 		random.nextInt(0,256),random.nextInt(0,256));
+
+	this->work_color_ = color_;
 }
 
 void MyCircle::setChild(){
@@ -29,17 +32,19 @@ void MyCircle::setChild(){
 	//bound should equal the radius of the outer circle minus the radius
 	//of the inner circle.
 	this->child_->bound_ = abs(this->radius_ - this->child_->radius_);
+	
+	this->updateAlpha(this->alpha_level_);
 }
 
-void MyCircle::removeChild(){
-	delete this->child_;
-}
+//void MyCircle::removeChild(){
+//	delete this->child_;
+//}
 
 void MyCircle::draw(){
 
 	Vec2f* center = new Vec2f(this->x_, this->y_);
 
-	gl::color(this->color_);
+	gl::color(this->work_color_);
 	gl::drawSolidCircle(*center, this->radius_,0);
 	
 	if(this->child_ != NULL)
@@ -106,4 +111,18 @@ void MyCircle::move(int x, int y){
 		this->child_->move(x + offset_x, y + offset_y);
 		this->child_->bound_ = abs(this->radius_ - this->child_->radius_);
 	}
+}
+
+void MyCircle::updateAlpha(float alpha_level){
+
+	this->alpha_level_ = alpha_level;
+
+	//this method assumes a white background
+	this->work_color_.r = (this->color_.r) * (1-alpha_level) + 255 * alpha_level;
+	this->work_color_.g = (this->color_.g) * (1-alpha_level) + 255 * alpha_level;
+	this->work_color_.b = (this->color_.b) * (1-alpha_level) + 255 * alpha_level;
+
+	if(this->child_ != NULL)
+		this->child_->updateAlpha(alpha_level);
+
 }

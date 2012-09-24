@@ -137,3 +137,23 @@ Node* Linklist::getNodeAt(int x, int y){
 	//if no point was found, return null.
 	return NULL;
 }
+
+//the linkedlist uses transparency to indicate depth. 
+//The more transparent something is, the further back in the stack it is.
+//alpha goes from 0-0.95, aka opaque -> almost totally transparent
+void Linklist::updateAlpha(){
+
+	Node* current = this->sentinel_->next_;
+	float alpha_counter = 0;
+
+	while(current != this->sentinel_){
+
+		current->shape_->updateAlpha(alpha_counter);
+
+		//move to the next node and increase the alpha
+		current = current->next_;
+		if(alpha_counter < 0.95)
+			alpha_counter += 0.05;
+	}
+	
+}
