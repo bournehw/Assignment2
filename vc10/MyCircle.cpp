@@ -20,15 +20,18 @@ MyCircle::MyCircle(int x, int y, float radius){
 
 	//make the shape a random color:
 	Rand random;
-	random.seed(x);
+	random.seed(x*y);
 	this->color_ = Color8u(random.nextInt(0,256),
 		random.nextInt(0,256),random.nextInt(0,256));
 
 	this->work_color_ = color_;
 }
 
+
 void MyCircle::setChild(){
-	this->child_ = new MyCircle(this->x_, this->y_, this->radius_ / 2);
+	//set the child offset from the parent by 1 pixel in each direction so
+	//that it has a different color (randomized color based on coordinates)
+	this->child_ = new MyCircle(this->x_+1, this->y_+1, this->radius_ / 2);
 	//bound should equal the radius of the outer circle minus the radius
 	//of the inner circle.
 	this->child_->bound_ = abs(this->radius_ - this->child_->radius_);
@@ -113,6 +116,7 @@ void MyCircle::move(int x, int y){
 	}
 }
 
+//this method changes the transparency of the circle
 void MyCircle::updateAlpha(float alpha_level){
 
 	this->alpha_level_ = alpha_level;

@@ -20,6 +20,7 @@ class MyCircle{
 		int radius_;
 		Color8u color_;
 		Color8u work_color_;
+
 		//these variables help keep track of the
 		//boundaries for children circles.
 		int anchor_x_;

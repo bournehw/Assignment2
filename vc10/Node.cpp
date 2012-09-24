@@ -4,8 +4,7 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-Node::Node(int index){
-	index_ = index;
+Node::Node(){
 	next_ = NULL;
 	prev_ = NULL;
 	shape_ = NULL;

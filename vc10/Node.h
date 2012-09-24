@@ -11,16 +11,15 @@ using namespace std;
 
 class Node{
   public:
-	void setup();
-	void update();
-	void draw();
+	//void setup();
+	//void update();
+	//void draw();
 
 	Node* next_;
 	Node* prev_;
 	MyCircle* shape_;
-	int index_;
 
-	Node(int index);
+	Node();
 
 };
 
