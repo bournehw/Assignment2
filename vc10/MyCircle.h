@@ -12,7 +12,7 @@ class MyCircle{
 	public:
 		void draw();
 
-		MyCircle(int x, int y, float radius);
+		MyCircle(int x, int y, int radius);
 
 		//origin of circles = center
 		int x_;

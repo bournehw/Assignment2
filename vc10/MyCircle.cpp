@@ -1,9 +1,9 @@
 #include "MyCircle.h"
 #include "cinder/Rand.h"
-
+//Can use #pargma once instead of the preceding lines
 using namespace ci;
 
-MyCircle::MyCircle(int x, int y, float radius){
+MyCircle::MyCircle(int x, int y, int radius){
 	this->x_ = x;
 	this->y_ = y;
 	this->child_ = NULL;
@@ -44,11 +44,11 @@ void MyCircle::setChild(){
 //}
 
 void MyCircle::draw(){
-
-	Vec2f* center = new Vec2f(this->x_, this->y_);
+	//Should explicitly cast to indicate that you meant to do it.
+	Vec2f* center = new Vec2f((float)(this->x_), (float)(this->y_));
 
 	gl::color(this->work_color_);
-	gl::drawSolidCircle(*center, this->radius_,0);
+	gl::drawSolidCircle(*center, (float)(this->radius_),0);
 	
 	if(this->child_ != NULL)
 		this->child_->draw();
@@ -122,9 +122,9 @@ void MyCircle::updateAlpha(float alpha_level){
 	this->alpha_level_ = alpha_level;
 
 	//this method assumes a white background
-	this->work_color_.r = (this->color_.r) * (1-alpha_level) + 255 * alpha_level;
-	this->work_color_.g = (this->color_.g) * (1-alpha_level) + 255 * alpha_level;
-	this->work_color_.b = (this->color_.b) * (1-alpha_level) + 255 * alpha_level;
+	this->work_color_.r = (this->color_.r)*(uint8_t)((1-alpha_level)+255*alpha_level);
+	this->work_color_.g = (this->color_.g)*(uint8_t)((1-alpha_level)+255*alpha_level);
+	this->work_color_.b = (this->color_.b)*(uint8_t)((1-alpha_level)+255*alpha_level);
 
 	if(this->child_ != NULL)
 		this->child_->updateAlpha(alpha_level);
